@@ -1,5 +1,5 @@
 
-import { Button, DarkThemeToggle, Navbar, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
+import { Button, DarkThemeToggle, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 
 export function NavigationBar() {
   return (
@@ -10,13 +10,9 @@ export function NavigationBar() {
         <NavbarToggle />
       </div>
       <NavbarCollapse>
-        <NavbarLink href="#" active>
-          Home
-        </NavbarLink>
-        <NavbarLink href="#">About</NavbarLink>
-        <NavbarLink href="#">Services</NavbarLink>
-        <NavbarLink href="#">Pricing</NavbarLink>
-        <NavbarLink href="#">Contact</NavbarLink>
+        <NavbarBrand className="text-3xl font-bold text-blue-800">
+          PRO THT <span className="ml-2 text-base text-black">by Alexander Briyan</span>
+        </NavbarBrand>
       </NavbarCollapse>
     </Navbar>
   );

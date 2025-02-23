@@ -2,7 +2,7 @@ import React from "react";
 
 const LoginPage: React.FC = () => {
   return (
-    <div className="flex min-h-screen w-screen items-center justify-center bg-gray-100">
+    <div className="flex w-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md space-y-6 rounded bg-white p-8 shadow-md">
         <h1 className="text-center text-2xl font-bold">Welcome Back!</h1>
         <form className="space-y-6">
