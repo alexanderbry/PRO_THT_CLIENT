@@ -12,10 +12,14 @@ interface Iprops {
 export function EditButton(props: Iprops) {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
+    id: 0,
     email: "",
     fullName: "",
     gender: "",
     dateOfBirth: "",
+    role: "",
+    createdAt: "",
+    updatedAt: "",
   });
 
   function onCloseModal() {
@@ -44,7 +48,9 @@ export function EditButton(props: Iprops) {
   const handleSubmit: React.FormEventHandler = async (event) => {
     event.preventDefault();
     try {
-      const { id, email, role, updatedAt, ...updateData } = formData;
+      const { id, email, role, createdAt, updatedAt, ...updateData } = formData;
+      console.log(id, email, role, createdAt, updatedAt);
+
       await api.put(`/${props.userId}`, updateData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -56,7 +62,7 @@ export function EditButton(props: Iprops) {
         title: "User updated",
         text: "The user details were updated successfully!",
       });
-      setOpenModal(false)
+      setOpenModal(false);
     } catch (error) {
       if (isAxiosError(error)) {
         Swal.fire({

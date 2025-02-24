@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import { useEffect, useState } from "react";
 
 import HomePage from "./pages/HomePage";
@@ -20,41 +20,35 @@ function App() {
     }
 
     if (role === "admin") {
-      setIsAdmin(role === "admin");
+      setIsAdmin(true);
     }
   }, []);
 
   if (!isAuthenticated) {
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
     );
   }
 
   if (isAdmin) {
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/admin" element={<AdminPage/>}></Route>
-          <Route path="*" element={<Navigate to="/admin" />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/admin" element={<AdminPage />}></Route>
+        <Route path="*" element={<Navigate to="/admin" />} />
+      </Routes>
     );
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<HomePage />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route index element={<HomePage />} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 

@@ -28,12 +28,12 @@ const AdminPage: React.FC = () => {
 
   async function fetchUsers() {
     const token = localStorage.getItem("token");
-
     const response = await api.get(`/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    
     setUsers(response.data.data);
   }
 
@@ -78,7 +78,7 @@ const AdminPage: React.FC = () => {
   return (
     <div className="min-h-screen">
       <NavigationBar />
-      <div className="flex h-screen w-screen items-center justify-center p-4">
+      <div className="flex h-screen w-screen flex-col items-center justify-center gap-6 p-4">
         <Table hoverable>
           <TableHead>
             <TableHeadCell className="text-center">No</TableHeadCell>
