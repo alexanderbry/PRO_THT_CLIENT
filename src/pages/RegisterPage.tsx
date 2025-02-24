@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import { api } from "../APIs/api";
+import { isAxiosError } from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -9,17 +15,28 @@ const RegisterPage: React.FC = () => {
     dateOfBirth: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const handleSubmit: React.FormEventHandler = async (event) => {
+    event.preventDefault();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(formData);
+    try {
+      await api.post("/register", formData);
+
+      navigate("/login");
+    } catch (error) {
+      if (isAxiosError(error)) {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry!",
+          text: error.response?.data.message,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry!",
+          text: "An error occurred. Please try again later.",
+        });
+      }
+    }
   };
 
   return (
@@ -38,7 +55,9 @@ const RegisterPage: React.FC = () => {
               name="email"
               type="email"
               value={formData.email}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               required
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
@@ -54,7 +73,9 @@ const RegisterPage: React.FC = () => {
               name="password"
               type="password"
               value={formData.password}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               required
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
@@ -70,7 +91,9 @@ const RegisterPage: React.FC = () => {
               name="fullName"
               type="text"
               value={formData.fullName}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, fullName: e.target.value })
+              }
               required
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
@@ -86,7 +109,9 @@ const RegisterPage: React.FC = () => {
                   name="gender"
                   value="male"
                   checked={formData.gender === "male"}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    setFormData({ ...formData, gender: e.target.value })
+                  }
                   required
                   className="form-radio"
                 />
@@ -98,7 +123,9 @@ const RegisterPage: React.FC = () => {
                   name="gender"
                   value="female"
                   checked={formData.gender === "female"}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    setFormData({ ...formData, gender: e.target.value })
+                  }
                   required
                   className="form-radio"
                 />
@@ -117,7 +144,9 @@ const RegisterPage: React.FC = () => {
               name="dateOfBirth"
               type="date"
               value={formData.dateOfBirth}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, dateOfBirth: e.target.value })
+              }
               required
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />

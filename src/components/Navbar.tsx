@@ -1,11 +1,21 @@
 
-import { Button, DarkThemeToggle, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
+import { Button, DarkThemeToggle, Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from "flowbite-react";
+import { useNavigate } from "react-router";
 
 export function NavigationBar() {
+  const navigate = useNavigate();
+
+  async function HandleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    navigate("/login");
+  }
+  
   return (
-    <Navbar fluid>
+    <Navbar fluid className="fixed w-screen">
       <div className="flex gap-3 md:order-2">
-        <Button color="failure">Logout</Button>
+        <Button color="failure" onClick={HandleLogout}>Logout</Button>
         <DarkThemeToggle />
         <NavbarToggle />
       </div>

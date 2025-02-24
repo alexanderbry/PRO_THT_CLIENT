@@ -4,11 +4,11 @@ import { useNavigate } from "react-router";
 import { isAxiosError } from "axios";
 import Swal from "sweetalert2";
 
-const LoginPage: React.FC = () => {
+const AdminLoginPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = React.useState({
-    email: "",
+    id: "",
     password: "",
   });
 
@@ -16,13 +16,13 @@ const LoginPage: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await api.post("/login", formData);
+      const response = await api.post("/admin/login", formData);
 
       const token = response.data.data;
       localStorage.setItem("token", token);
-      localStorage.setItem("role", "member");
+      localStorage.setItem("role", "admin");
 
-      navigate("/");
+      navigate("/admin");
     } catch (error) {
       if (isAxiosError(error)) {
         Swal.fire({
@@ -43,25 +43,24 @@ const LoginPage: React.FC = () => {
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md space-y-6 rounded bg-white p-8 shadow-md">
-        <h1 className="text-center text-2xl font-bold">Welcome Back!</h1>
+        <h1 className="text-center text-2xl font-bold">Admin Login</h1>
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <label
-              htmlFor="email"
+              htmlFor="id"
               className="block text-sm font-medium text-gray-700"
             >
-              Email address
+              Id
             </label>
             <input
-              name="email"
-              type="email"
-              autoComplete="email"
+              name="id"
+              type="id"
               onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
+                setFormData({ ...formData, id: e.target.value })
               }
-              value={formData.email}
+              value={formData.id}
               required
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
             />
           </div>
           <div>
@@ -80,27 +79,16 @@ const LoginPage: React.FC = () => {
               }
               value={formData.password}
               required
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
             />
           </div>
           <div>
             <button
               type="submit"
-              className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="w-full rounded-md border border-transparent bg-orange-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
               Sign in
             </button>
-            <div>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                Don't have an account?{" "}
-                <a
-                  href="/register"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Create account
-                </a>
-              </p>
-            </div>
           </div>
         </form>
       </div>
@@ -108,4 +96,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default AdminLoginPage;
